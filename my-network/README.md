@@ -1,57 +1,87 @@
 # My Commodity Trading network
 
-> This is the "Hello World" of Hyperledger Composer samples, which demonstrates the core functionality of Hyperledger Composer by changing the value of an asset.
+Perform all the steps in a single terminal window
 
-This business network defines:
-
-**Participant**
-`SampleParticipant`
-
-**Asset**
-`SampleAsset`
-
-**Transaction**
-`SampleTransaction`
-
-**Event**
-`SampleEvent`
-
-SampleAssets are owned by a SampleParticipant, and the value property on a SampleAsset can be modified by submitting a SampleTransaction. The SampleTransaction emits a SampleEvent that notifies applications of the old and new values for each modified SampleAsset.
-
-To test this Business Network Definition in the **Test** tab:
-
-Create a `SampleParticipant` participant:
-
-```
-{
-  "$class": "org.acme.sample.SampleParticipant",
-  "participantId": "Toby",
-  "firstName": "Tobias",
-  "lastName": "Hunter"
-}
+## To initialise fabric
+These steps will download latest fabric docker images, initialize the fabric blockchain and create a composer profile on the fabric blockchain
+```sh
+export FABRIC_VERSION=hlfv1
+cd ~/hyperledger/composer/fabric-tools
+./downloadFabric.sh
+./startFabric.sh
+./createComposerProfile.sh
 ```
 
-Create a `SampleAsset` asset:
-
-```
-{
-  "$class": "org.acme.sample.SampleAsset",
-  "assetId": "assetId:1",
-  "owner": "resource:org.acme.sample.SampleParticipant#Toby",
-  "value": "original value"
-}
+## Go to my-network
+```sh
+cd ~/hyperledger/composer/my-network
 ```
 
-Submit a `SampleTransaction` transaction:
-
-```
-{
-  "$class": "org.acme.sample.SampleTransaction",
-  "asset": "resource:org.acme.sample.SampleAsset#assetId:1",
-  "newValue": "new value"
-}
+## Create Business Network Archive File
+current directory `~/hyperledger/composer/my-network`
+```sh
+npm install
 ```
 
-After submitting this transaction, you should now see the transaction in the Transaction Registry and that a `SampleEvent` has been emitted. As a result, the value of the `assetId:1` should now be `new value` in the Asset Registry.
+## Deploy the business network definition on the fabric blockchain
+current directory `~/hyperledger/composer/my-network`
+```sh
+cd dist
+composer network deploy -a my-network.bna -p hlfv1 -i PeerAdmin -s randomString
+cd ..
+```
 
-Congratulations!
+To check whether the .bna is successfully deployed, run
+`composer network ping -n my-network -p hlfv1 -i admin -s adminpw`
+which should return
+```
+The connection to the network was successfully tested: my-network
+    version: 0.10.0
+    participant: <no participant found>
+
+Command succeeded
+```
+## To generate Rest server
+Current directory `~/hyperledger/composer/my-network` 
+
+Run
+```sh
+composer-rest-server
+```
+Enter The following choices
+>? Enter your Fabric Connection Profile Name: `hlfv1`
+
+>? Enter your Business Network Identifier : `my-network`
+
+>? Enter your Fabric username : `admin`
+
+>? Enter your secret: `adminpw`
+
+>? Specify if you want namespaces in the generated REST API: `never use namespaces`
+
+>? Specify if you want the generated REST API to be secured: `No`
+
+>? Specify if you want to enable event publication over WebSockets: `Yes`
+
+>? Specify if you want to enable TLS security for the REST API: `No`
+
+
+This will run the rest server which will listen on `localhost:3000`
+
+The Api can be browsed on `localhost:3000/explorer`
+
+Close the rest server with `Ctrl+C`
+
+
+## To start the Application
+
+Current directory `~/hyperledger/composer/my-network`
+
+```sh
+cd my-app
+npm start
+```
+
+This will execute the `composer-rest-server` to start API server on `localhost:3000` with explorer on`localhost:3000/explorer`.
+
+The angular files are webserved on `localhost:4200`
