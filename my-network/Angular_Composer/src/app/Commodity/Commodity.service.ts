@@ -1,3 +1,4 @@
+import { Trade } from '../org.acme.mynetwork';
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs/Observable';
@@ -9,12 +10,14 @@ import 'rxjs/Rx';
 export class CommodityService {
 
 	
-		private NAMESPACE: string = 'Commodity';
+    private NAMESPACE: string = 'Commodity';
+    
+    private NAMESPACE1: string = 'Trade';
 	
 
 
 
-    constructor(private dataService: DataService<Commodity>) {
+    constructor(private dataService: DataService<Commodity>, private dataService1: DataService<Trade>) {
     };
 
     public getAll(): Observable<Commodity[]> {
@@ -29,8 +32,8 @@ export class CommodityService {
       return this.dataService.add(this.NAMESPACE, itemToAdd);
     }
 
-    public updateAsset(id: any, itemToUpdate: any): Observable<Commodity> {
-      return this.dataService.update(this.NAMESPACE, id, itemToUpdate);
+    public updateAsset(itemToUpdate: any, id: any): Observable<Trade> {
+      return this.dataService1.update(this.NAMESPACE1, itemToUpdate, id);
     }
 
     public deleteAsset(id: any): Observable<Commodity> {
