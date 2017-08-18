@@ -72,6 +72,11 @@ The Api can be browsed on `localhost:3000/explorer`
 
 Close the rest server with `Ctrl+C`
 
+For running this step next time, we can use 
+
+```
+composer-rest-server -p hlfv1 -n my-network -i admin -s adminpw -N never -w true
+```
 
 ## To start the Application
 
