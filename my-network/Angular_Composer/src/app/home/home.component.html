@@ -2,4 +2,68 @@
 	<div class="jumbotron">
 		<h1>Angular_Composer Application</h1>
 	</div>
+	<div id="preview1" class="g-b g-b--t1of2 split split-preview">
+		<div id="preview" preview="" debounce="150">
+			<h1><a id="My_Commodity_Trading_network_0"></a>My Commodity Trading network</h1>
+			<p>Perform all the steps in a single terminal window</p>
+			<h2><a id="To_initialise_fabric_4"></a>To initialise fabric</h2>
+			<p>These steps will download latest fabric docker images, initialize the fabric blockchain and create a composer profile
+				on the fabric blockchain</p>
+			<pre><code class="language-sh"><span class="hljs-built_in">export</span> FABRIC_VERSION=hlfv1
+<span class="hljs-built_in">cd</span> ~/hyperledger/composer/fabric-tools
+./downloadFabric.sh
+./startFabric.sh
+./createComposerProfile.sh
+</code></pre>
+			<h2><a id="Go_to_mynetwork_14"></a>Go to my-network</h2>
+			<pre><code class="language-sh"><span class="hljs-built_in">cd</span> ~/hyperledger/composer/my-network
+</code></pre>
+			<h2><a id="Create_Business_Network_Archive_File_19"></a>Create Business Network Archive File</h2>
+			<p>current directory <code>~/hyperledger/composer/my-network</code></p>
+			<pre><code class="language-sh">npm install
+</code></pre>
+			<h2><a id="Deploy_the_business_network_definition_on_the_fabric_blockchain_25"></a>Deploy the business network definition
+				on the fabric blockchain</h2>
+			<p>current directory <code>~/hyperledger/composer/my-network</code></p>
+			<pre><code class="language-sh"><span class="hljs-built_in">cd</span> dist
+composer network deploy <span class="hljs-operator">-a</span> my-network.bna -p hlfv1 -i PeerAdmin <span class="hljs-operator">-s</span> randomString
+<span class="hljs-built_in">cd</span> ..
+</code></pre>
+			<p>To check whether the .bna is successfully deployed, run<br>
+				<code>composer network ping -n my-network -p hlfv1 -i admin -s adminpw</code><br> which should return</p>
+			<pre><code>The connection to the network was successfully tested: my-network
+    version: 0.10.0
+    participant: &lt;no participant found&gt;
+
+Command succeeded
+</code></pre>
+			<h2><a id="To_generate_Rest_server_43"></a>To generate Rest server</h2>
+			<p>Current directory <code>~/hyperledger/composer/my-network</code></p>
+			<p>Run</p>
+			<pre><code class="language-sh">composer-rest-server
+</code></pre>
+			<p>Enter The following choices</p>
+			<blockquote>
+				<p>? Enter your Fabric Connection Profile Name: <code>hlfv1</code></p>
+				<p>? Enter your Business Network Identifier : <code>my-network</code></p>
+				<p>? Enter your Fabric username : <code>admin</code></p>
+				<p>? Enter your secret: <code>adminpw</code></p>
+				<p>? Specify if you want namespaces in the generated REST API: <code>never use namespaces</code></p>
+				<p>? Specify if you want the generated REST API to be secured: <code>No</code></p>
+				<p>? Specify if you want to enable event publication over WebSockets: <code>Yes</code></p>
+				<p>? Specify if you want to enable TLS security for the REST API: <code>No</code></p>
+			</blockquote>
+			<p>This will run the rest server which will listen on <code>localhost:3000</code></p>
+			<p>The Api can be browsed on <code>localhost:3000/explorer</code></p>
+			<p>Close the rest server with <code>Ctrl+C</code></p>
+			<h2><a id="To_start_the_Application_75"></a>To start the Application</h2>
+			<p>Current directory <code>~/hyperledger/composer/my-network</code></p>
+			<pre><code class="language-sh"><span class="hljs-built_in">cd</span> my-app
+npm start
+</code></pre>
+			<p>This will execute the <code>composer-rest-server</code> to start API server on <code>localhost:3000</code> with explorer
+				on<code>localhost:3000/explorer</code>.</p>
+			<p>The angular files are webserved on <code>localhost:4200</code></p>
+		</div>
+	</div>
 </div>
