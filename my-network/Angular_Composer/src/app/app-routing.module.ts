@@ -8,6 +8,8 @@ import { CommodityComponent } from './Commodity/Commodity.component';
 
 import { TraderComponent } from './Trader/Trader.component'
 
+import { TradeCommodityComponent } from './TradeCommodity/TradeCommodity.component'
+
 
 const routes: Routes = [
     // { path: 'transaction', component: TransactionComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
     { path: 'Commodity', component: CommodityComponent},
     
     { path: 'Trader', component: TraderComponent},
+
+    { path: 'TradeCommodity', component: TradeCommodityComponent},
 
 		{path: '**', redirectTo:''}
 

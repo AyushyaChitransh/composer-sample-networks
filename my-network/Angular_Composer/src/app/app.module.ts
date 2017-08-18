@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 
 import { CommodityComponent } from './Commodity/Commodity.component';
 import { TraderComponent } from './Trader/Trader.component';
+import { TradeCommodityComponent } from './TradeCommodity/TradeCommodity.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TraderComponent } from './Trader/Trader.component';
     // TransactionComponent,
     
     CommodityComponent,
-    TraderComponent
+    TraderComponent,
+    TradeCommodityComponent
 ],
   imports: [
     BrowserModule,
