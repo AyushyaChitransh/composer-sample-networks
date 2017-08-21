@@ -174,7 +174,7 @@ export class CommodityComponent implements OnInit {
   }
 
 
-   updateAsset(form: any): Promise<any> {
+  updateAsset(form: any): Promise<any> {
     this.asset = {
       $class: "org.acme.mynetwork.Commodity",
       
